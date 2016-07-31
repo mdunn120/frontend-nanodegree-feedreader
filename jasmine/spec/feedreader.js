@@ -92,19 +92,23 @@ $(function() {
     });
 
     /* TODO: Write a new test suite named "Initial Entries" */
-    describe("Initial Entries", function() {
+     describe(" Initial Entries ", function() {
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
          * a single .entry element within the .feed container.
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
-        it("when the loadFeed function completes its work, there's at least a single .entry element within the .feed container.", function() {
-            //var feed = $('feed');
 
+        beforeEach(function (done) {
+            loadFeed(0, function() { done(); })
+        });
+
+        it("At least one initial entry when loadFeed is called.", function(done) {
+            expect($('.feed').find('.entry').length).toBeGreaterThan(0);
+            done();   
         });
     });
-  
     /* TODO: Write a new test suite named "New Feed Selection"
     */
      describe("New feed Selection", function() {
@@ -113,9 +117,13 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-          it("when a new feed is loaded by the loadFeed function the content actually changes", function() {
-
+        var original_content = $('body').html();
+        beforeEach(function (done) {
+            loadFeed(1, function() { done(); })
         });
-    });
-  
+        it("when a new feed is loaded by the loadFeed function the content actually changes", function(done) {
+            expect(original_content).not.toBe($('body').html());
+            done(); 
+        });
+      });
 }());
