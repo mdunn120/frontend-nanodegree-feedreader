@@ -23,6 +23,8 @@ var allFeeds = [
     }
 ];
 
+//menuIcon = $('.menu-icon-link');
+
 /* This function starts up our application. The Google Feed
  * Reader API is loaded asynchonously and will then call this
  * function when the API is loaded.
@@ -130,5 +132,6 @@ $(function() {
      */
     menuIcon.on('click', function() {
         $('body').toggleClass('menu-hidden');
+        console.log($('body').attr('class'));
     });
 }());
