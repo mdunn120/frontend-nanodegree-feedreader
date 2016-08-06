@@ -125,12 +125,29 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-        var original_content = $('body').html();
+        var feed_1_ID = 1;
+        var feed_2_ID = 2;
+        var content_feed_1;
+        var content_feed_2;
         beforeEach(function (done) {
-            loadFeed(1, function() { done(); });
+            // If the first feed is loaded, save content from feed 1
+            // and load the second feed
+            loadFeed(feed_1_ID, function() { 
+                content_feed_1 = $('.feed .entry h2').text();
+                
+                // The second feed is finished loading.
+                // Save this content 2 and call 'done.'
+                loadFeed(feed_2_ID, function(){
+                    content_feed_2 = $('.feed .entry h2').text();  
+                    done();
+                });
+            });
         });
         it("when a new feed is loaded by the loadFeed function the content actually changes", function(done) {
-            expect(original_content).not.toBe($('body').html());
+            //Testing to make sure the 2 feeds are different
+            console.log(content_feed_1);
+            console.log(content_feed_2);
+            expect(content_feed_1).not.toBe(content_feed_2);
             done(); 
         });
       });
